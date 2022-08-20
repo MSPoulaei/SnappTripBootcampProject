@@ -13,16 +13,27 @@ services:
     volumes:
       - ./SnappTrip:/src
     restart: unless-stopped
+  #db:
+  #  image: "mcr.microsoft.com/mssql/server"
+  #  environment:
+  #    SA_PASSWORD: "Your_password123"
+  #    MSSQL_SA_PASSWORD: "Your_password123"
+  #    ACCEPT_EULA: "Y"
+  #  ports:
+  #    - 1433:1433
+  #  volumes:
+  #    - database:/var/opt/mssql
+  #  restart: unless-stopped
   db:
-    image: "mcr.microsoft.com/mssql/server"
+    image: "postgres:latest"
     environment:
-      SA_PASSWORD: "Your_password123"
-      MSSQL_SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
+      - POSTGRES_USER=sa
+      - POSTGRES_PASSWORD=Your_password123
+      - POSTGRES_DB=SnappTripDB
     ports:
-      - 1433:1433
+      - 5432:5432
     volumes:
-      - database:/var/opt/mssql
+      - database:/var/lib/postgresql/data
     restart: unless-stopped
 
 volumes:
