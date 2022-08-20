@@ -7,15 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
 WORKDIR /src
-RUN mkdir SnappTrip SnappTrip.BusinessLayer SnappTrip.DataAccessLayer
 COPY ["SnappTrip/SnappTrip.csproj", "SnappTrip/"]
 COPY ["SnappTrip.BusinessLayer/SnappTrip.BusinessLayer.csproj", "SnappTrip.BusinessLayer/"]
 COPY ["SnappTrip.DataAccessLayer/SnappTrip.DataAccessLayer.csproj", "SnappTrip.DataAccessLayer/"]
 RUN dotnet restore "SnappTrip/SnappTrip.csproj"
 COPY . .
-#RUN dotnet ef database update --project "SnappTrip.DataAccessLayer/SnappTrip.DataAccessLayer.csproj"
 WORKDIR "/src/SnappTrip"
+#RUN dotnet ef database update --project "../SnappTrip.DataAccessLayer/SnappTrip.DataAccessLayer.csproj"
 RUN dotnet build "SnappTrip.csproj" -c Release -o /app/build
 
 FROM build AS publish
