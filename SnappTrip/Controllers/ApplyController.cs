@@ -12,7 +12,7 @@ namespace SnappTrip.Controllers
     [ApiController]
     public class ApplyController : ControllerBase
     {
-        private readonly IMemoryCache memoryCache;
+        //private readonly IMemoryCache memoryCache;
         private readonly IApplyRepos applyRepos;
 
         // GET: api/<ApplyController>

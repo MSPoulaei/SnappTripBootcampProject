@@ -12,7 +12,6 @@ namespace SnappTrip.BusinessLayer.Services
 {
     public class PopulateRepositoryHomeMadeCache : IPopulateRepos
     {
-        private readonly IMemoryCache memoryCache;
         private readonly SnappTripDbContext context;
 
         public PopulateRepositoryHomeMadeCache(SnappTripDbContext context)
@@ -22,14 +21,14 @@ namespace SnappTrip.BusinessLayer.Services
 
         public void Populate()
         {
-            Console.WriteLine("populating");
+            //Console.WriteLine("populating");
             //const string key = "rca";
             //List<RCA> RCAs=memoryCache.Get<List<RCA>>(key);
-            
-            if (MemoryCache.RCAs == null || (DateTime.Now - MemoryCache.lastRequestTime).Minutes>5)
+
+            if (MemoryCache.RCAs == null || (DateTime.Now - MemoryCache.lastRequestTime).Minutes > 5)
             {
                 MemoryCache.RCAs = getRCAsFromDB();
-                MemoryCache.lastRequestTime= DateTime.Now;
+                MemoryCache.lastRequestTime = DateTime.Now;
             }
 
             //memoryCache.Set(key,RCAs,TimeSpan.FromSeconds(60));
@@ -37,30 +36,18 @@ namespace SnappTrip.BusinessLayer.Services
 
         private List<RCA> getRCAsFromDB()
         {
-            Console.WriteLine("getting from db");
+            //Console.WriteLine("getting from db");
             Dictionary<long, int> map_RuleId_indexRCAs = new Dictionary<long, int>();
             Dictionary<long, int> map_ActionId_indexRCAs = new Dictionary<long, int>();
             List<RCA> RCAs = new List<RCA>();
-            RCAs.Add(new RCA()
-            {
-                Rule=new Rule()
-                {
-                    ActionId=21,
-                    ID=0,
-                    Name="adgsad",
-                    RuleType=DataAccessLayer.Models.Enums.RuleType.MARKUP
-                },
-                Action=null,
-                Conditions=null,
-            });
             var rules = context.Rules;
             int index = 0;
             foreach (var rule in rules)
             {
                 RCAs.Add(new RCA()
                 {
-                    Rule=rule,
-                    Conditions=new List<Condition>()
+                    Rule = rule,
+                    Conditions = new List<Condition>()
                 });
                 map_RuleId_indexRCAs.Add(rule.ID, index);
                 map_ActionId_indexRCAs.Add(rule.ActionId, index);
@@ -70,13 +57,28 @@ namespace SnappTrip.BusinessLayer.Services
             var actions = context.Actions;
             foreach (var action in actions)
             {
-                RCAs[map_ActionId_indexRCAs[action.Id]].Action=action;
+                try
+                {
+                    RCAs[map_ActionId_indexRCAs[action.Id]].Action = action;
+                }
+                catch (Exception)
+                {
+
+                }
             }
             actions = null;
             var conditions = context.Conditions;
             foreach (var condition in conditions)
             {
-                RCAs[map_RuleId_indexRCAs[condition.RuleId]].Conditions.Add(condition);
+                try
+                {
+                    RCAs[map_RuleId_indexRCAs[condition.RuleId]].Conditions.Add(condition);
+
+                }
+                catch (Exception)
+                {
+
+                }
             }
             return RCAs;
         }

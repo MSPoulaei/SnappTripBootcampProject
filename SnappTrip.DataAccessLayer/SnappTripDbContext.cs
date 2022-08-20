@@ -25,10 +25,11 @@ namespace SnappTrip.DataAccessLayer
         //    // connect to sql server with connection string from app settings
         //    options.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
         //}
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    //Configure domain classes using modelBuilder here   
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Configure domain classes using modelBuilder here
+            modelBuilder.Seed();
+        }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    optionsBuilder.UseSqlServer("Data Source=localhost; Initial Catalog=SnappTripDB;Integrated Security=SSPI", builder =>

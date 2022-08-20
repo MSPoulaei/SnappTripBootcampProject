@@ -14,8 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SnappTrip.DataAccessLayer.SnappTripDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
 builder.Services.AddTransient<IPopulateRepos, PopulateRepositoryHomeMadeCache>();
 builder.Services.AddTransient<IApplyRepos, ApplyRepository>();
-//builder.Services.AddTransient<populate>();
-new populate(builder.Services.BuildServiceProvider());
+
 
 //builder.Services.UseSqlServer();
 var app = builder.Build();
@@ -33,17 +32,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+((IPopulateRepos)builder.Services.BuildServiceProvider().GetService(typeof(IPopulateRepos))).Populate();
 app.Run();
-
-class populate
-{
-    private readonly IServiceProvider services;
-
-    public populate(IServiceProvider services)
-    {
-        this.services = services;
-        IPopulateRepos populater = (IPopulateRepos)services.GetService(typeof(IPopulateRepos));
-        populater.Populate();
-    }
-
-}
