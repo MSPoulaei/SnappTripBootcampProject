@@ -82,10 +82,8 @@ namespace SnappTrip.BusinessLayer.Services
             {
                 case RuleType.DISCOUNT:
                     return -res;
-                    break;
                 case RuleType.MARKUP:
                     return res;
-                    break;
                 default:
                     break;
             }

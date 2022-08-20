@@ -1,6 +1,7 @@
 using SnappTrip.BusinessLayer.Interfaces;
 using SnappTrip.BusinessLayer.Services;
 using Microsoft.EntityFrameworkCore;
+using SnappTrip;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +21,11 @@ builder.Services.AddTransient<IApplyRepos, ApplyRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 
@@ -32,5 +33,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-((IPopulateRepos)builder.Services.BuildServiceProvider().GetService(typeof(IPopulateRepos))).Populate();
+
+DatabaseManagementService.MigrationInitialisation(app);//apply migration
+((IPopulateRepos)builder.Services.BuildServiceProvider().GetService(typeof(IPopulateRepos))).Populate();//populate dump data
+
 app.Run();
