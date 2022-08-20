@@ -11,12 +11,13 @@ services:
     depends_on:
       - db
     volumes:
-      - ./SnappTrip:/app
+      - ./SnappTrip:/src
     restart: unless-stopped
   db:
     image: "mcr.microsoft.com/mssql/server"
     environment:
       SA_PASSWORD: "Your_password123"
+      MSSQL_SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"
     ports:
       - 1433:1433

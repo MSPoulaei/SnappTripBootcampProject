@@ -12,7 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<SnappTrip.DataAccessLayer.SnappTripDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
+string connectionString = builder.Configuration.GetConnectionString("WebApiDatabase") ?? "Server=db;Database=SnappTripDB;User=sa;Password=Your_password123;";
+if (connectionString == "") connectionString = "Server=db;Database=SnappTripDB;User=sa;Password=Your_password123;";
+builder.Services.AddDbContext<SnappTrip.DataAccessLayer.SnappTripDbContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddTransient<IPopulateRepos, PopulateRepositoryHomeMadeCache>();
 builder.Services.AddTransient<IApplyRepos, ApplyRepository>();
 
