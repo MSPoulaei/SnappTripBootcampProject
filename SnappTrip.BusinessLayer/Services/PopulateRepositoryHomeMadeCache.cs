@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using SnappTrip.BusinessLayer.Interfaces;
 using SnappTrip.DataAccessLayer;
@@ -24,7 +25,8 @@ namespace SnappTrip.BusinessLayer.Services
             //Console.WriteLine("populating");
             //const string key = "rca";
             //List<RCA> RCAs=memoryCache.Get<List<RCA>>(key);
-
+            context.Database.EnsureCreated();
+            context.Database.Migrate();
             if (MemoryCache.RCAs == null || (DateTime.Now - MemoryCache.lastRequestTime).Minutes > 5)
             {
                 MemoryCache.RCAs = getRCAsFromDB();

@@ -28,6 +28,7 @@ namespace SnappTrip.DataAccessLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Configure domain classes using modelBuilder here
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
