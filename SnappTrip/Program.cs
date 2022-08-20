@@ -34,7 +34,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-//DatabaseManagementService.MigrationInitialisation(app);//apply migration
+DatabaseManagementService.MigrationInitialisation(app);//apply migration
 ((IPopulateRepos)builder.Services.BuildServiceProvider().GetService(typeof(IPopulateRepos))).Populate();//populate dump data
 
 app.Run();
