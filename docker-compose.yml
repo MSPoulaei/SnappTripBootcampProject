@@ -8,10 +8,11 @@ services:
     ports:
       - 80:80
       - 443:443
-    depends_on:
-      - db
+    #depends_on:
+    #  - db
     volumes:
       - ./SnappTrip:/src
+      #- database:/
     restart: unless-stopped
   #db:
   #  image: "mcr.microsoft.com/mssql/server"
@@ -24,17 +25,17 @@ services:
   #  volumes:
   #    - database:/var/opt/mssql
   #  restart: unless-stopped
-  db:
-    image: "postgres:latest"
-    environment:
-      - POSTGRES_USER=sa
-      - POSTGRES_PASSWORD=Your_password123
-      - POSTGRES_DB=SnappTripDB
-    ports:
-      - 5432:5432
-    volumes:
-      - database:/var/lib/postgresql/data
-    restart: unless-stopped
+  #db:
+  #  image: "postgres:latest"
+  #  environment:
+  #    - POSTGRES_USER=sa
+  #    - POSTGRES_PASSWORD=Your_password123
+  #    - POSTGRES_DB=SnappTripDB
+  #  ports:
+  #    - 5432:5432
+  #  volumes:
+  #    - database:/var/lib/postgresql/data
+  #  restart: unless-stopped
 
-volumes:
-  database:
+#volumes:
+#  database:
