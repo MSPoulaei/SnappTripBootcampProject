@@ -26,7 +26,7 @@ namespace SnappTrip.BusinessLayer.Services
             //const string key = "rca";
             //List<RCA> RCAs=memoryCache.Get<List<RCA>>(key);
             context.Database.EnsureCreated();
-            context.Database.Migrate();
+            //context.Database.Migrate();
             if (MemoryCache.RCAs == null || (DateTime.Now - MemoryCache.lastRequestTime).Minutes > 5)
             {
                 MemoryCache.RCAs = getRCAsFromDB();
